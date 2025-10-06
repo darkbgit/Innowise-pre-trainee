@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task4", "Task4", "{B43E1285-7F54-3F68-A242-7DECFC9841AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7C2394BF-7F83-80EA-41A3-BC1EC514D395}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task4.WebAPI", "Task4\src\Task4.WebAPI\Task4.WebAPI.csproj", "{E901C78B-3F68-43B3-A15B-13C36C2F2A83}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Debug|x64.Build.0 = Debug|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Debug|x86.Build.0 = Debug|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Release|x64.ActiveCfg = Release|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Release|x64.Build.0 = Release|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Release|x86.ActiveCfg = Release|Any CPU
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7C2394BF-7F83-80EA-41A3-BC1EC514D395} = {B43E1285-7F54-3F68-A242-7DECFC9841AC}
+		{E901C78B-3F68-43B3-A15B-13C36C2F2A83} = {7C2394BF-7F83-80EA-41A3-BC1EC514D395}
+	EndGlobalSection
+EndGlobal
