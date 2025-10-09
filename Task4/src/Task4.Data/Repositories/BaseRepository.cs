@@ -12,17 +12,17 @@ public abstract class BaseRepository<T> : IRepository<T> where T : class, IBaseM
         Table = table;
     }
 
-    public Task<T?> Get(int id)
+    public Task<T?> GetAsync(int id)
     {
         return Task.FromResult(Table.FirstOrDefault(item => item.Id == id));
     }
 
-    public Task<IReadOnlyList<T>> GetAll()
+    public Task<IReadOnlyList<T>> GetAllAsync()
     {
         return Task.FromResult<IReadOnlyList<T>>(Table);
     }
 
-    public virtual Task<int> Add(T newEntity)
+    public virtual Task<int> AddAsync(T newEntity)
     {
         var maxId = Table.Count == 0 ? 0 : Table.Max(item => item.Id);
         newEntity.Id = maxId + 1;
@@ -31,28 +31,26 @@ public abstract class BaseRepository<T> : IRepository<T> where T : class, IBaseM
         return Task.FromResult(newEntity.Id);
     }
 
-    public Task<bool> Update(T newEntity)
+    public Task UpdateAsync(T newEntity)
     {
-        var entity = Table.FirstOrDefault(item => item.Id == newEntity.Id);
-        if (entity == null)
-        {
-            return Task.FromResult(false);
-        }
+        var entity = Table.First(item => item.Id == newEntity.Id);
+
         var index = Table.IndexOf(entity);
         Table[index] = newEntity;
 
-        return Task.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    public Task<bool> Remove(int id)
+    public Task RemoveAsync(int id)
     {
-        var entity = Table.FirstOrDefault(item => item.Id == id);
-        if (entity == null)
-        {
-            return Task.FromResult(false);
-        }
+        var entity = Table.First(item => item.Id == id);
         Table.Remove(entity);
 
-        return Task.FromResult(true);
+        return Task.CompletedTask;
+    }
+
+    public Task<bool> ExistsAsync(int id)
+    {
+        return Task.FromResult(Table.Any(item => item.Id == id));
     }
 }

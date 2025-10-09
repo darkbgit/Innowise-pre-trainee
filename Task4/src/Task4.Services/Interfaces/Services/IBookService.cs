@@ -4,9 +4,9 @@ namespace Task4.Core.Interfaces.Services;
 
 public interface IBookService
 {
-    Task<BookDto> GetBookById(int id);
-    Task<IReadOnlyList<BookDto>> GetAllBooks();
-    Task Add(BookDto book);
-    Task Update(BookDto book);
-    Task Delete(int id);
+    Task<BookDto> GetBookByIdAsync(int id);
+    Task<IReadOnlyList<BookDto>> GetAllBooksAsync();
+    Task<int> AddAsync(BookForCreateDto book);
+    Task UpdateAsync(int id, BookForUpdateDto book);
+    Task DeleteAsync(int id);
 }

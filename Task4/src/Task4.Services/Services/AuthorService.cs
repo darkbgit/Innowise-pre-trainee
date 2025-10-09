@@ -1,24 +1,22 @@
+using System.ComponentModel.DataAnnotations;
 using Task4.Core.DTOs;
+using Task4.Core.Exceptions;
 using Task4.Core.Interfaces.Repositories;
 using Task4.Core.Interfaces.Services;
 using Task4.Core.Models;
 
 namespace Task4.Core.Services;
 
-public class AuthorService : IAuthorService
+public class AuthorService(IRepository<Author> authorRepository) : IAuthorService
 {
-    private readonly IRepository<Author> _authorRepository;
+    private readonly IRepository<Author> _authorRepository = authorRepository;
 
-    public AuthorService(IRepository<Author> authorRepository)
+    public async Task<AuthorDto> GetAuthorByIdAsync(int id)
     {
-        _authorRepository = authorRepository;
-    }
+        var author = await _authorRepository.GetAsync(id) ??
+            throw new NotFoundException($"Author with id {id} doesn't exist.");
 
-    public async Task<AuthorDto?> GetAuthorById(int id)
-    {
-        var author = await _authorRepository.Get(id);
-
-        return author == null ? null : new AuthorDto
+        return new AuthorDto
         {
             Id = author.Id,
             Name = author.Name,
@@ -26,9 +24,9 @@ public class AuthorService : IAuthorService
         };
     }
 
-    public async Task<IReadOnlyList<AuthorDto>> GetAllAuthors()
+    public async Task<IReadOnlyList<AuthorDto>> GetAllAuthorsAsync()
     {
-        var authors = await _authorRepository.GetAll();
+        var authors = await _authorRepository.GetAllAsync();
 
         return authors.Select(a => new AuthorDto
         {
@@ -39,31 +37,47 @@ public class AuthorService : IAuthorService
         ).ToList();
     }
 
-    public async Task<int> Add(AuthorForCreateDto author)
+    public async Task<int> AddAsync(AuthorForCreateDto author)
     {
+        if (author.DateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
+            throw new ValidationException("Date of birth couldn't be in the future.");
+
         var newAuthor = new Author
         {
             Name = author.Name,
             DateOfBirth = author.DateOfBirth
         };
 
-        return await _authorRepository.Add(newAuthor);
+        return await _authorRepository.AddAsync(newAuthor);
     }
 
-    public async Task<bool> Update(int id, AuthorForUpdateDto author)
+    public async Task UpdateAsync(int id, AuthorForUpdateDto author)
     {
-        var newAuthor = new Author
+        if (author.DateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
+            throw new ValidationException("Date of birth couldn't be in the future.");
+
+        var isExist = await _authorRepository.ExistsAsync(id);
+
+        if (!isExist)
+            throw new NotFoundException($"Author with id {id} doesn't exist.");
+
+        var updatedAuthor = new Author
         {
             Id = id,
             Name = author.Name,
             DateOfBirth = author.DateOfBirth
         };
 
-        return await _authorRepository.Update(newAuthor);
+        await _authorRepository.UpdateAsync(updatedAuthor);
     }
 
-    public async Task<bool> Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-        return await _authorRepository.Remove(id);
+        var isExist = await _authorRepository.ExistsAsync(id);
+
+        if (!isExist)
+            throw new NotFoundException($"Author with id {id} doesn't exist.");
+
+        await _authorRepository.RemoveAsync(id);
     }
 }

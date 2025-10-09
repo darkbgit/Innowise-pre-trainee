@@ -4,9 +4,9 @@ namespace Task4.Core.Interfaces.Services;
 
 public interface IAuthorService
 {
-    Task<AuthorDto?> GetAuthorById(int id);
-    Task<IReadOnlyList<AuthorDto>> GetAllAuthors();
-    Task<int> Add(AuthorForCreateDto author);
-    Task<bool> Update(int id, AuthorForUpdateDto author);
-    Task<bool> Delete(int id);
+    Task<AuthorDto> GetAuthorByIdAsync(int id);
+    Task<IReadOnlyList<AuthorDto>> GetAllAuthorsAsync();
+    Task<int> AddAsync(AuthorForCreateDto author);
+    Task UpdateAsync(int id, AuthorForUpdateDto author);
+    Task DeleteAsync(int id);
 }
